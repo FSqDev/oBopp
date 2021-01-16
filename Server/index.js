@@ -119,16 +119,23 @@ app.get('/socket', (req, res) => {
 
 app.get('/doml', async (req, res) => {
     perform_spicy_ml_shit()
-    .then((predictions) => {
+    .then((data) => {
+        let predictions = data.predictions;
         for (i = 0; i < predictions.length; ++i) {
             // console.log(predictions[i]);
             if (predictions[i].class === 'person') {
-                res.send('holy fuck someones in your house');
+                response = {
+                    'person_detected': true,
+                    'img': data.img
+                }
+                res.send(response);
                 return;
                 // res.send(JSON.stringify(predictions));
             }
         }
-        res.send('all clear');
+        res.send({
+            'person_detected': false
+        });
     })
     .catch((err) => {
         res.send('noml :(');
@@ -221,7 +228,10 @@ function perform_spicy_ml_shit() {
                     const predictions = await model.detect(decoded);
                     console.log('Predictions: ');
                     console.log(predictions);   
-                    resolve(predictions);
+                    resolve({
+                        'predictions': predictions,
+                        'img': data.toString('base64'),
+                    });
                 });
             }
         });
