@@ -8,8 +8,7 @@ import {
   Link
 } from "react-router-dom";
 
-function App() {
-  return (
+function App() {return (
     <Router>
       <div>
         <nav>
@@ -54,6 +53,5 @@ function About() {
 
 function Users() {
   return <h2>Users</h2>;
-}
-
-export default App;
+} 
+export default App
