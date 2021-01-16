@@ -4,8 +4,14 @@
   "description": "Back-end server for oBopp",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index.js",
+    "heroku": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
+  }
 }
