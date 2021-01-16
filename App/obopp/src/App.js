@@ -4,6 +4,7 @@ import React from "react";
 import Camera from "./components/Camera"
 import SignIn from "./components/SignIn"
 import SignUp from "./components/SignUp"
+import Dashboard from "./components/Dashboard"
 import {
   BrowserRouter as Router,
   Switch,
@@ -28,6 +29,9 @@ function App() {return (
             <li>
               <Link to="/ihatedarian">Camera</Link>
             </li>
+            <li>
+              <Link to="/dashboard">Dashboard</Link>
+            </li>
           </ul>
         </nav>
 
@@ -45,6 +49,9 @@ function App() {return (
           </Route>
           <Route path="/ihatedarian">
             <Camera />
+          </Route>
+          <Route path="/dashboard">
+            <Dashboard />
           </Route>
         </Switch>
       </div>
