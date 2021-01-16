@@ -3,6 +3,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js"></script>
         <script>
             const socket = io.connect("http://localhost:5000")
+            socket.emit('connectUser', '600365766d5e9d0278b2e9a2')
             setInterval(() => {
                 socket.emit('webcam', 'this is my data')
                 console.log('emitted')

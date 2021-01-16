@@ -141,23 +141,52 @@ app.get('/doml', async (req, res) => {
  */
 io.on('connection', (socket) => {
     console.log("New connection from: " + socket.client.id)
+    var user
 
-    socket.on('connectUser', (data) => {
-        addCamToUser(data, socket.client.id)
+    socket.on('connectUser', (userID) => {
+        addCamToUser(userID, socket.client.id)
+        user = userID
+
+        socket.on('webcam', (data) => {
+            console.log(data)
+            // TODO Save it to map here
+        })
     })
-    
-    socket.on('webcam', (data) => {
-        console.log(data)
+
+    socket.on('requestFootage', (data) => {
+        setInterval(() => {
+            socket.emit('footage', 'this is my data') // TODO Get data from map and send
+        }, 500)
+    })
+
+    socket.on('disconnect', (reason) => {
+        if (user) {
+            rmCamFromUser(user, socket.client.id)
+        }
+        console.log("Connection " + socket.client.id + " closed, reason: " + reason)
     })
 })
 
 function addCamToUser(userID, socketID) {
     if (mongoose.connection.readyState != 1) {
 		console.log('Issue with mongoose connection')
-		res.status(500).send('Internal server error')
 		return
     }
     User.updateOne({_id: userID}, { $push: { cams: socketID } }, function (error, success) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log(success);
+        }
+    })
+}
+
+function rmCamFromUser(userID, socketID) {
+    if (mongoose.connection.readyState != 1) {
+		console.log('Issue with mongoose connection')
+		return
+    }
+    User.updateOne({_id: userID}, { $pull: { cams: socketID } }, function (error, success) {
         if (error) {
             console.log(error);
         } else {
@@ -172,7 +201,6 @@ const port = process.env.PORT || 5000
 server.listen(port, () => {
 	console.log(`Listening on port ${port}...`)
 })
-
 
 
 /**
