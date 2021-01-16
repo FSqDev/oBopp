@@ -41,33 +41,33 @@ app.post('/register', (req, res) => {
             res.status(500).send('Internal server error')
             return
         }
-        else if (user != null) {
+        if (user != null) {
             res.status(401).send('Email already registered')
             return
         }
-    })    
 
-    bcrypt.hash(req.body.password, SALT, (err, hash) => {
-        if (err) {
-            res.status(500).send('Internal server error')
-            return
-        }
-
-        const newUser = new User({
-            email: req.body.email,
-            password: hash
-        })
-        newUser.save().then((result) => {
-            res.send({'id': result._id})
-        }).catch((error) => {
-            console.log(error)
-            if (isMongoError(error)) {
+        bcrypt.hash(req.body.password, SALT, (err, hash) => {
+            if (err) {
                 res.status(500).send('Internal server error')
-            } else {
-                res.status(400).send('Bad Request')
+                return
             }
-        })
-    });
+    
+            const newUser = new User({
+                email: req.body.email,
+                password: hash
+            })
+            newUser.save().then((result) => {
+                res.send({'id': result._id})
+            }).catch((error) => {
+                console.log(error)
+                if (error) {
+                    res.status(500).send('Internal server error')
+                } else {
+                    res.status(400).send('Bad Request')
+                }
+            })
+        });
+    })    
 })
 
 app.post('/login', (req, res) => {
