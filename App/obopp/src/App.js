@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import React from "react";
+import Camera from "./components/Camera"
 import {
   BrowserRouter as Router,
   Switch,
@@ -22,6 +23,9 @@ function App() {return (
             <li>
               <Link to="/users">Users</Link>
             </li>
+            <li>
+              <Link to="/ihatedarian">Camera</Link>
+            </li>
           </ul>
         </nav>
 
@@ -34,8 +38,11 @@ function App() {return (
           <Route path="/users">
             <Users />
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <Home />
+          </Route>
+          <Route path="/ihatedarian">
+            <Camera />
           </Route>
         </Switch>
       </div>
