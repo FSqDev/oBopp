@@ -17,7 +17,10 @@ app.get('/', (req, res) => {
  * SOCKET BEHAVIOR
  */
 io.on('connection', (socket) => {
-    console.log("New connection from: " + socket.handshake.address.address)
+    console.log("New connection from: " + socket.client.id)
+    io.emit('socketClientID', socket.client.id);
+
+    
 })
 
 // Deploy
