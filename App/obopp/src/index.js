@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
 
 ReactDOM.render(
-  <SignIn />,
+  <App />,
   document.getElementById('root')
 );
 
