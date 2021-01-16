@@ -5,20 +5,19 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.json());
 const server = require('http').Server(app)
 const path = require('path')
-
 // Socket Communications
 const io = require('socket.io')(server)
-
 // DB and auth
+const { ObjectID } = require('mongodb')
 const { mongoose } = require('./mongoose');
 const { User } = require('./models/user')
 const bcrypt = require('bcrypt');
 const SALT = 10;
 
+
 /**
  * EXPRESS SERVER ENDPOINTS
  */
-
 app.get('/', (req, res) => {
     // Just to check if server is running
     res.send('oBopp server is running')
@@ -36,6 +35,7 @@ app.post('/register', (req, res) => {
         return
     }
 
+    // Check if email registered
     User.findOne({'email': req.body.email}, function(err, user) {
         if (err) {
             res.status(500).send('Internal server error')
@@ -46,6 +46,7 @@ app.post('/register', (req, res) => {
             return
         }
 
+        // Hash and add to DB
         bcrypt.hash(req.body.password, SALT, (err, hash) => {
             if (err) {
                 res.status(500).send('Internal server error')
@@ -54,7 +55,8 @@ app.post('/register', (req, res) => {
     
             const newUser = new User({
                 email: req.body.email,
-                password: hash
+                password: hash,
+                cams: []
             })
             newUser.save().then((result) => {
                 res.send({'id': result._id})
@@ -104,19 +106,40 @@ app.post('/login', (req, res) => {
 
 app.get('/socket', (req, res) => {
     // Test endpoint because we were figuring out sockets
-    res.sendFile(path.join(__dirname + '/index.html'))
+    res.sendFile(path.join(__dirname + '/demo.html'))
 })
+
 
 /**
  * SOCKET BEHAVIOR
  */
 io.on('connection', (socket) => {
     console.log("New connection from: " + socket.client.id)
+
+    socket.on('connectUser', (data) => {
+        addCamToUser(data, socket.client.id)
+    })
     
     socket.on('webcam', (data) => {
         console.log(data)
     })
 })
+
+function addCamToUser(userID, socketID) {
+    if (mongoose.connection.readyState != 1) {
+		console.log('Issue with mongoose connection')
+		res.status(500).send('Internal server error')
+		return
+    }
+    User.updateOne({_id: userID}, { $push: { cams: socketID } }, function (error, success) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log(success);
+        }
+    })
+}
+
 
 // Deploy
 const port = process.env.PORT || 5000
