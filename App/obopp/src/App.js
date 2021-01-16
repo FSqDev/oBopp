@@ -10,6 +10,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Gallery from './components/Gallery';
 
 function App() {return (
     <Router>
@@ -28,6 +29,9 @@ function App() {return (
             <li>
               <Link to="/ihatedarian">Camera</Link>
             </li>
+            <li>
+              <Link to="/darianbad">Gallery</Link>
+            </li>
           </ul>
         </nav>
 
@@ -45,6 +49,9 @@ function App() {return (
           </Route>
           <Route path="/ihatedarian">
             <Camera />
+          </Route>
+          <Route path="/darianbad">
+            <Gallery />
           </Route>
         </Switch>
       </div>
