@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core';
 import React from 'react';
 import Webcam from "react-webcam";
 
@@ -9,6 +10,15 @@ export default function Camera() {
     const [capturing, setCapturing] = React.useState(false);
     const [recordedChunks, setRecordedChunks] = React.useState([]);
 
+    const handleDataAvailable = React.useCallback(
+      ({ data }) => {
+        if (data.size > 0) {
+          setRecordedChunks((prev) => prev.concat(data));
+        }
+      },
+      [setRecordedChunks]
+    );
+
     const handleStartCaptureClick = React.useCallback(() => {
       setCapturing(true);
       mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
@@ -19,21 +29,12 @@ export default function Camera() {
         handleDataAvailable
       );
       mediaRecorderRef.current.start();
-    }, [webcamRef, setCapturing, mediaRecorderRef]);
-
-    const handleDataAvailable = React.useCallback(
-      ({ data }) => {
-        if (data.size > 0) {
-          setRecordedChunks((prev) => prev.concat(data));
-        }
-      },
-      [setRecordedChunks]
-    );
+    }, [webcamRef, setCapturing, mediaRecorderRef, handleDataAvailable]);
 
     const handleStopCaptureClick = React.useCallback(() => {
       mediaRecorderRef.current.stop();
       setCapturing(false);
-    }, [mediaRecorderRef, webcamRef, setCapturing]);
+    }, [mediaRecorderRef, setCapturing]);
 
     const handleDownload = React.useCallback(() => {
       if (recordedChunks.length) {
@@ -56,17 +57,17 @@ export default function Camera() {
       <>
         <Webcam audio={false} ref={webcamRef} />
         {capturing ? (
-          <button onClick={handleStopCaptureClick}>Stop Capture</button>
+          <Button onClick={handleStopCaptureClick}>Stop Capture</Button>
         ) : (
-            <button onClick={handleStartCaptureClick}>Start Capture</button>
+            <Button onClick={handleStartCaptureClick}>Start Capture</Button>
           )}
         {recordedChunks.length > 0 && (
-          <button onClick={handleDownload}>Download</button>
+          <Button onClick={handleDownload}>Download</Button>
         )}
       </>
     );
   };
 
-  return (WebcamStreamCapture);
+  return (WebcamStreamCapture());
 
 }
