@@ -13,6 +13,14 @@ const { mongoose } = require('./mongoose');
 const { User } = require('./models/user')
 const bcrypt = require('bcrypt');
 const SALT = 10;
+// spicy ML shit
+require('@tensorflow/tfjs-backend-cpu');
+require('@tensorflow/tfjs-backend-webgl');
+require('@tensorflow/tfjs-node');
+const cocoSsd = require('@tensorflow-models/coco-ssd');
+var fs = require('fs')
+const inkjet = require('inkjet');
+
 
 
 /**
@@ -109,6 +117,24 @@ app.get('/socket', (req, res) => {
     res.sendFile(path.join(__dirname + '/demo.html'))
 })
 
+app.get('/doml', async (req, res) => {
+    perform_spicy_ml_shit()
+    .then((predictions) => {
+        for (i = 0; i < predictions.length; ++i) {
+            // console.log(predictions[i]);
+            if (predictions[i].class === 'person') {
+                res.send('holy fuck someones in your house');
+                return;
+                // res.send(JSON.stringify(predictions));
+            }
+        }
+        res.send('all clear');
+    })
+    .catch((err) => {
+        res.send('noml :(');
+    });
+})
+
 
 /**
  * SOCKET BEHAVIOR
@@ -146,3 +172,30 @@ const port = process.env.PORT || 5000
 server.listen(port, () => {
 	console.log(`Listening on port ${port}...`)
 })
+
+
+
+/**
+ * HOME OF SPICY ML SHIT
+ */
+
+function perform_spicy_ml_shit() {
+    return new Promise(function(resolve, reject) {
+        fs.readFile('testimages/test.jpg', async function(err, data) {
+            if (err) {
+                console.log('Made an oops loading photo :(');
+                reject('Failed to read image');
+            }
+            if (data) {
+                inkjet.decode(data, async (err, decoded) => {
+                    if (err) reject('failed to decode image');
+                    const model = await cocoSsd.load();
+                    const predictions = await model.detect(decoded);
+                    console.log('Predictions: ');
+                    console.log(predictions);   
+                    resolve(predictions);
+                });
+            }
+        });
+    });
+ }
