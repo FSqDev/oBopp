@@ -4,8 +4,8 @@
   "description": "Back-end server for oBopp",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "heroku": "node server.js",
+    "start": "nodemon index.js",
+    "heroku": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
