@@ -2,6 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import React from "react";
 import Camera from "./components/Camera"
+import SignIn from "./components/SignIn"
+import SignUp from "./components/SignUp"
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,10 +20,10 @@ function App() {return (
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/about">About</Link>
+              <Link to="/signin">SignIn</Link>
             </li>
             <li>
-              <Link to="/users">Users</Link>
+              <Link to="/signup">SignUp</Link>
             </li>
             <li>
               <Link to="/ihatedarian">Camera</Link>
@@ -32,11 +34,11 @@ function App() {return (
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/about">
-            <About />
+          <Route path="/signin">
+            <SignIn />
           </Route>
-          <Route path="/users">
-            <Users />
+          <Route path="/signup">
+            <SignUp />
           </Route>
           <Route exact path="/">
             <Home />
