@@ -7,7 +7,7 @@ import SignIn from './components/SignIn';
 import Camera from './components/Camera';
 
 ReactDOM.render(
-  <Camera />,
+  <App />,
   document.getElementById('root')
 );
 
