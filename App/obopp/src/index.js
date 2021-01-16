@@ -3,10 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+<<<<<<< HEAD
 import SignUp from './components/SignUp';
 
 ReactDOM.render(
   <App />,
+=======
+import SignIn from './components/SignIn';
+import Camera from './components/Camera';
+
+ReactDOM.render(
+  <Camera />,
+>>>>>>> 260fe6f9e7622b16d8b429902a418a8fdd6bd7a1
   document.getElementById('root')
 );
 
