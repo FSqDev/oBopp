@@ -4,9 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import SignIn from './components/SignIn';
+import Camera from './components/Camera';
 
 ReactDOM.render(
-  <SignIn />,
+  <Camera />,
   document.getElementById('root')
 );
 
