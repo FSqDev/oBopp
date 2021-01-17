@@ -2,7 +2,9 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
-app.use(bodyParser.json());
+app.use(bodyParser.json())
+const cors = require('cors');
+app.use(cors())
 const server = require('http').Server(app)
 const path = require('path')
 // Socket Communications
@@ -40,6 +42,8 @@ app.get('/', (req, res) => {
 
 app.post('/register', (req, res) => {
     // Register new user to the db
+    console.log(req.body)
+
     if (mongoose.connection.readyState != 1) {
 		console.log('Issue with mongoose connection')
 		res.status(500).send('Internal server error')
