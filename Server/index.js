@@ -389,7 +389,7 @@ function perform_spicy_ml_shit(data) {
         to: email,
         from: 'bgrenier@ualberta.ca',
         subject: 'Intruder Detected',
-        text: 'This mans was detected in your house my guy',
+        text: 'There was an intruder detected in your house. Please review the attached photo',
         attachments: [
             {
                 content: image,
