@@ -85,7 +85,8 @@ app.post('/register', (req, res) => {
             const newUser = new User({
                 email: req.body.email,
                 password: hash,
-                cams: []
+                phone: "+" + req.body.phone,
+                cams: [],
             })
             newUser.save().then((result) => {
                 res.send({'id': result._id})
@@ -148,6 +149,23 @@ app.get('/camlist/:userid', (req, res) => {
 		log(error)
 		res.status(500).send('Internal Server Error')
 	})
+})
+
+app.get('/contactInfo/:userid', (req, res) => {
+    // Get contact info of a user (phone, email)
+    if (mongoose.connection.readyState != 1) {
+        console.log('Issue with mongoose connection')
+        res.status(500).send('Internal server error')
+		return
+    }
+
+    const id = req.params.userid
+    User.findById(id).then((user) => {
+        res.send({
+            'email': user.email,
+            'phone': user.phone
+        })
+    })
 })
 
 app.get('/camera', (req, res) => {

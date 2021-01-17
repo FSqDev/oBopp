@@ -55,9 +55,10 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("")
+  const [phone, setPhone] = useState("")
 
   const validateForm = () => {
-    return email.length > 0 && password.length > 0 && password == repeatPassword;
+    return email.length > 0 && password.length > 0 && password == repeatPassword && phone.length > 9 && phone.length < 12 && !isNaN(phone);
   };
 
   const register = async (e) => {
@@ -65,7 +66,8 @@ export default function SignUp() {
     try {
       await registerUser({
         "email": email,
-        "password": password
+        "password": password,
+        "phone": phone
       }).then(() => {
         history.replace("/signin")
       })
@@ -86,7 +88,7 @@ export default function SignUp() {
         </Typography>
         <form className={classes.form} noValidate onSubmit={register}>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+          <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
@@ -96,6 +98,18 @@ export default function SignUp() {
                 name="email"
                 autoComplete="email"
                 onChange={(e) => setEmail(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="phone"
+                label="Phone Number (numbers only)"
+                name="phone"
+                autoComplete="phone"
+                onChange={(e) => setPhone(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
