@@ -22,11 +22,7 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
-import CameraCapture1 from './CameraCapture1';
-import CameraCapture2 from './CameraCapture2';
-import CameraCapture3 from './CameraCapture3';
-import CameraCapture4 from './CameraCapture4';
-
+import CameraCapture from './CameraCapture';
 
 function Copyright() {
   return (
@@ -185,25 +181,25 @@ export default function Dashboard() {
             {/* CameraCapture1 */}
             <Grid item xs={12} md={4} lg={6}>
               <Paper className={fixedHeightCameraPaper}>
-                <CameraCapture1 />
+                <CameraCapture />
               </Paper>
             </Grid>
             {/* CameraCapture2 */}
             <Grid item xs={12} md={4} lg={6}>
               <Paper className={fixedHeightCameraPaper}>
-                <CameraCapture2 />
+                <CameraCapture />
               </Paper>
             </Grid>
             {/* CameraCapture3 */}
             <Grid item xs={12} md={4} lg={6}>
               <Paper className={fixedHeightCameraPaper}>
-                <CameraCapture3 />
+                <CameraCapture />
               </Paper>
             </Grid>
             {/* CameraCapture4 */}
             <Grid item xs={12} md={4} lg={6}>
               <Paper className={fixedHeightCameraPaper}>
-                <CameraCapture4 />
+                <CameraCapture />
               </Paper>
             </Grid>
             {/* Chart */}
