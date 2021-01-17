@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { registerUser } from '../actions/auth'
 import Particles from 'react-particles-js';
+import './signup.css';
 
 function Copyright() {
   return (
@@ -553,9 +554,7 @@ export default function SignUp() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+        <img src='https://media.discordapp.net/attachments/799353146060570734/800326842535116820/pink-phone.png' id="logo"/>
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>

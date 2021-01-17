@@ -554,11 +554,8 @@ export default function SignIn() {
                 } />
       <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <img src='https://media.discordapp.net/attachments/799353146060570734/800322985764061184/dchendurant.png' id="logo"/>
+      <img src='https://media.discordapp.net/attachments/799353146060570734/800326842535116820/pink-phone.png' id="logo2"/>
       <div className={classes.paper}  id="form">
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
