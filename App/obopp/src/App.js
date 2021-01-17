@@ -11,6 +11,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Cookies from 'js-cookie';
 
 function App() {return (
     <Router>
@@ -60,6 +61,12 @@ function App() {return (
 }
 
 function Home() {
+  let id = Cookies.get('socket-id');
+  if (!id) {
+    console.log('sign in pls');
+    return SignIn();
+  }
+  console.log('already signed in');
   return <h2>Home</h2>;
 }
 

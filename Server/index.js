@@ -23,6 +23,11 @@ const cocoSsd = require('@tensorflow-models/coco-ssd');
 var fs = require('fs')
 const inkjet = require('inkjet');
 
+// texting for intruders
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const twilio_client = require('twilio')(accountSid, authToken);
+
 const model_promise = (async function() {
     m = await cocoSsd.load();
     return m;
@@ -166,12 +171,13 @@ app.get('/doml', async (req, res) => {
                 // res.send(JSON.stringify(predictions));
             }
         }
+        send_intruder_photo(data.img);
         res.send({
             'person_detected': false
         });
     })
     .catch((err) => {
-        res.send('noml :(');
+        res.send('noml :(: ' + err);
     });
 })
 
@@ -249,7 +255,7 @@ server.listen(port, () => {
 
 function perform_spicy_ml_shit() {
     return new Promise(function(resolve, reject) {
-        fs.readFile('testimages/test.jpg', async function(err, data) {
+        fs.readFile('testimages/noperson.jpg', async function(err, data) {
             if (err) {
                 console.log('Made an oops loading photo :(');
                 reject('Failed to read image');
@@ -260,8 +266,8 @@ function perform_spicy_ml_shit() {
 
                     model_promise.then(async (model) => {
                         const predictions = await model.detect(decoded);
-                        console.log('Predictions: ');
-                        console.log(predictions);   
+                        // console.log('Predictions: ');
+                        // console.log(predictions);   
                         resolve({
                             'predictions': predictions,
                             'img': data.toString('base64'),
@@ -272,4 +278,20 @@ function perform_spicy_ml_shit() {
             }
         });
     });
+ }
+
+ function send_intruder_photo(image) {
+    if (image) {
+        inkjet.decode(image, (err, decoded) => {
+            twilio_client.messages
+            .create({
+                from: '+14088247333',
+                body: 'This mans was detected in your house',
+                mediaUrl: decoded,
+                to: '+14038772383'
+            })
+            .then(message => console.log('Message sent: ' + message.sid))
+            .catch(err => console.log('text failed: ' + err));
+        });
+    }
  }

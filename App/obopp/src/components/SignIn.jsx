@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { loginUser } from '../actions/auth';
+import Cookies from 'js-cookie';
 
 function Copyright() {
   return (
@@ -67,6 +68,8 @@ export default function SignIn() {
         "email": email,
         "password": password
       }).then((resp) => {
+        console.log(resp.id);
+        Cookies.set('socket-id', resp.id)
         history.replace("/dashboard")
       })
     } catch (e) {
