@@ -21,6 +21,10 @@ const cocoSsd = require('@tensorflow-models/coco-ssd');
 var fs = require('fs')
 const inkjet = require('inkjet');
 
+const model_promise = (async function() {
+    m = await cocoSsd.load();
+    return m;
+})();
 
 
 /**
@@ -224,14 +228,17 @@ function perform_spicy_ml_shit() {
             if (data) {
                 inkjet.decode(data, async (err, decoded) => {
                     if (err) reject('failed to decode image');
-                    const model = await cocoSsd.load();
-                    const predictions = await model.detect(decoded);
-                    console.log('Predictions: ');
-                    console.log(predictions);   
-                    resolve({
-                        'predictions': predictions,
-                        'img': data.toString('base64'),
-                    });
+
+                    model_promise.then(async (model) => {
+                        const predictions = await model.detect(decoded);
+                        console.log('Predictions: ');
+                        console.log(predictions);   
+                        resolve({
+                            'predictions': predictions,
+                            'img': data.toString('base64'),
+                        });
+                    })
+                    
                 });
             }
         });
