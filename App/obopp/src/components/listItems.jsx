@@ -29,22 +29,6 @@ export const mainListItems = (
         <ListItemText primary="Camera" />
       </ListItem>
     </Link>
-    <Link to="/signin">
-      <ListItem button>
-        <ListItemIcon>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="Sign In" />
-      </ListItem>
-    </Link>
-    <Link to="/signup">
-      <ListItem button>
-        <ListItemIcon>
-          <BarChartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Sign Up" />
-      </ListItem>
-    </Link>
     <ListItem button>
       <ListItemIcon>
         <LayersIcon />
