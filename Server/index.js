@@ -195,7 +195,6 @@ io.on('connection', (socket) => {
 
         socket.on('webcam', (data) => {
             imageCache.set(socket.client.id, data)
-            console.log(imageCache)
         })
     })
 
