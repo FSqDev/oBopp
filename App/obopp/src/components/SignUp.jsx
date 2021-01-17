@@ -88,7 +88,7 @@ export default function SignUp() {
       <CssBaseline />
       <div className={classes.paper}>
         <img src={appLogo} alt="obopp logo" id="logo"/>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" id="title2">
           Sign up
         </Typography>
         <form className={classes.form} noValidate onSubmit={register}>

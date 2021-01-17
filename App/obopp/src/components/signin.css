@@ -16,9 +16,13 @@
 #logo2 {
   width: 20%;
   height: 20%;
-  margin: 50% 45% 0% 39.5%;
+  margin: 40% 45% 0% 39.5%;
 }
 
 #form {
-  margin-top: 10px !important;
+  margin-top: 20px !important;
+}
+
+#title {
+  margin-top: 20px !important;
 }

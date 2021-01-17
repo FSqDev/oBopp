@@ -89,6 +89,9 @@ export default function SignIn() {
       <Container component="main" maxWidth="xs">
       <CssBaseline />
       <img src={appLogo} alt="obopp logo" id="logo2"/>
+      <Typography component="h1" variant="h3" align="center" id="title">
+          oBopp
+      </Typography>
       <div className={classes.paper}  id="form">
         <Typography component="h1" variant="h5">
           Sign in
