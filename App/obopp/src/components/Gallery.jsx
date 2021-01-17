@@ -1,8 +1,8 @@
-// how to display image?
+import React from 'react';
+import lion_cat from '../image/lion_cat.jpg'
 
 export default function Gallery() {
-    // let picture = require('App/obopp/src/image/lion_cat.jpg');
     return (
-        <img/>
+        <img src={lion_cat}/>
     );
 }
