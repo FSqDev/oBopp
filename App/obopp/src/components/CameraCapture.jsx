@@ -1,5 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import lion_cat from '../image/lion_cat.jpg'
+import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -15,19 +19,8 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function CameraCapture({id}) {
+export default function CameraCapture() {
     const classes = useStyles();
-
-    const [img, setImg] = useState("")
-
-    const io = require("socket.io-client");
-    useEffect(() => {
-      const socket = io("https://obopp.herokuapp.com/", { transports: ['websocket', 'polling', 'flashsocket'] })
-      socket.emit('requestFootage', id)
-      socket.on('footage', (data) => {
-          setImg(data)
-      })
-    }, [])
 
     return (
         <React.Fragment>
@@ -40,7 +33,7 @@ export default function CameraCapture({id}) {
                     type="file"
                 />  
             </div>
-            <img src={img} alt="placeholder_image" height="300" width="480"/>
+            <img src={lion_cat} alt="placeholder_image" height="300" width="480"/>
         </React.Fragment>
     );
 }

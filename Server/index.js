@@ -22,16 +22,11 @@ require('@tensorflow/tfjs-node');
 const cocoSsd = require('@tensorflow-models/coco-ssd');
 var fs = require('fs')
 const inkjet = require('inkjet');
-const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
 
 // texting for intruders
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const twilio_client = require('twilio')(accountSid, authToken);
-const {Storage} = require('@google-cloud/storage');
-const storage = new Storage();
 
 const model_promise = (async function() {
     m = await cocoSsd.load();
@@ -171,13 +166,12 @@ app.get('/doml', async (req, res) => {
                     'person_detected': true,
                     'img': data.img
                 }
-                send_intruder_photo(data.img, '+14038772383');
-                // send_intruder_email(data.img, 'grenierb96@gmail.com');
                 res.send(response);
                 return;
                 // res.send(JSON.stringify(predictions));
             }
         }
+        send_intruder_photo(data.img);
         res.send({
             'person_detected': false
         });
@@ -207,7 +201,7 @@ io.on('connection', (socket) => {
     socket.on('requestFootage', (camID) => {
         setInterval(() => {
             socket.emit('footage', imageCache.get(camID))
-        }, 100)
+        }, 500)
     })
 
     socket.on('disconnect', (reason) => {
@@ -260,7 +254,7 @@ server.listen(port, () => {
 
 function perform_spicy_ml_shit() {
     return new Promise(function(resolve, reject) {
-        fs.readFile('testimages/test.jpg', async function(err, data) {
+        fs.readFile('testimages/noperson.jpg', async function(err, data) {
             if (err) {
                 console.log('Made an oops loading photo :(');
                 reject('Failed to read image');
@@ -285,50 +279,18 @@ function perform_spicy_ml_shit() {
     });
  }
 
- async function uploadImage(image) {
-     return new Promise((resolve, reject) => {
-        let bucket = storage.bucket('hed2021');
-        let file = bucket.file('intruder.jpg');
-        file.save(Buffer.from(image, 'base64'), {
-            metadata: { ContentType: 'image/jpeg' },
-            public: true, 
-        }).then(() => resolve())
-        .catch((err) => reject(err));
-    });
- }
-
- async function send_intruder_photo(image, user_phone) {
+ function send_intruder_photo(image) {
     if (image) {
-        uploadImage(image).then(() => {
+        inkjet.decode(image, (err, decoded) => {
             twilio_client.messages
             .create({
                 from: '+14088247333',
                 body: 'This mans was detected in your house',
-                mediaUrl: 'https://storage.googleapis.com/hed2021/intruder.jpg',
-                to: user_phone
+                mediaUrl: decoded,
+                to: '+14038772383'
             })
             .then(message => console.log('Message sent: ' + message.sid))
             .catch(err => console.log('text failed: ' + err));
-        })
-        .catch((err) => console.log(err));
+        });
     }
- }
-
- function send_intruder_email(image, email) {
-    const msg = {
-        to: email,
-        from: 'bgrenier@ualberta.ca',
-        subject: 'Intruder Detected',
-        text: 'This mans was detected in your house my guy',
-        attachments: [
-            {
-                content: image,
-                filename: 'intruder.jpg',
-                type: 'image/jpeg',
-            }
-        ]
-     }
-     sgMail.send(msg)
-        .then(() => console.log('Email sent'))
-        .catch((err) => console.log('Email failed: ' + err));
  }
