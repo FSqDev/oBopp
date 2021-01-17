@@ -11,6 +11,8 @@ import Typography from '@material-ui/core/Typography';
 import Events from './Events';
 import CameraCapture from './CameraCapture';
 import Title from './Title';
+import Cookies from 'js-cookie';
+import { getCameras } from '../actions/actions.js'
 
 function Copyright() {
     return (
@@ -36,6 +38,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
     const classes = useStyles;
+
+    const [cameras, setCameras] = [];
+    const loadCameras = async (e) => {
+        e.preventDefault()
+        try {
+          await getCameras(Cookies.get('user-id'))
+          .then((resp) => {
+            console.log(resp);
+          })
+        } catch (e) {
+          console.log(e.message);
+        }
+      }
 
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     const fixedHeightCameraPaper = clsx(classes.paper, classes.fixedHeightCamera);
