@@ -65,7 +65,7 @@ export default function SignIn() {
     e.preventDefault()
     try {
       await loginUser({
-        "email": email,
+        "email": email.toLowerCase(),
         "password": password
       }).then((resp) => {
         console.log(resp.id);
