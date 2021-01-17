@@ -173,10 +173,58 @@ export default function Dashboard() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={4}>
+          <Grid container spacing={3}>
             {/* Gallery */}
-            <Grid item xs={12}>
-              <Paper>
+            <Grid item xs={12} md={4} lg={4}>
+              <Paper className={fixedHeightPaper}>
+                <Gallery />
+              </Paper>
+            </Grid>
+            {/* Gallery */}
+            <Grid item xs={12} md={4} lg={4}>
+              <Paper className={fixedHeightPaper}>
+                <Gallery />
+              </Paper>
+            </Grid>
+            {/* Gallery */}
+            <Grid item xs={12} md={4} lg={4}>
+              <Paper className={fixedHeightPaper}>
+                <Gallery />
+              </Paper>
+            </Grid>
+            {/* Gallery */}
+            <Grid item xs={12} md={4} lg={4}>
+              <Paper className={fixedHeightPaper}>
+                <Gallery />
+              </Paper>
+            </Grid>
+            {/* Gallery */}
+            <Grid item xs={12} md={4} lg={4}>
+              <Paper className={fixedHeightPaper}>
+                <Gallery />
+              </Paper>
+            </Grid>
+            {/* Gallery */}
+            <Grid item xs={12} md={4} lg={4}>
+              <Paper className={fixedHeightPaper}>
+                <Gallery />
+              </Paper>
+            </Grid>
+            {/* Gallery */}
+            <Grid item xs={12} md={4} lg={4}>
+              <Paper className={fixedHeightPaper}>
+                <Gallery />
+              </Paper>
+            </Grid>
+            {/* Gallery */}
+            <Grid item xs={12} md={4} lg={4}>
+              <Paper className={fixedHeightPaper}>
+                <Gallery />
+              </Paper>
+            </Grid>
+            {/* Gallery */}
+            <Grid item xs={12} md={4} lg={4}>
+              <Paper className={fixedHeightPaper}>
                 <Gallery />
               </Paper>
             </Grid>
