@@ -22,6 +22,9 @@ var fs = require('fs')
 const inkjet = require('inkjet');
 
 
+// Image cache
+let imageCache = new Map()
+
 
 /**
  * EXPRESS SERVER ENDPOINTS
@@ -112,9 +115,31 @@ app.post('/login', (req, res) => {
     })    
 })
 
-app.get('/socket', (req, res) => {
-    // Test endpoint because we were figuring out sockets
-    res.sendFile(path.join(__dirname + '/demo.html'))
+app.get('/camlist/:userid', (req, res) => {
+    // Get a list of a user's camera socket IDs
+    if (mongoose.connection.readyState != 1) {
+		console.log('Issue with mongoose connection')
+		res.status(500).send('Internal server error')
+		return
+    }
+
+    const id = req.params.userid
+    User.findById(id).then((user) => {
+        res.send({'cams': user.cams})
+	}).catch((error) => {
+		log(error)
+		res.status(500).send('Internal Server Error')
+	})
+})
+
+app.get('/camera', (req, res) => {
+    // Test endpoint which mimics the behavior of a camera
+    res.sendFile(path.join(__dirname + '/test_html/test_cam.html'))
+})
+
+app.get('/manager', (req, res) => {
+    // Test endpoint which mimics the behavior of a management interface
+    res.sendFile(path.join(__dirname + '/test_html/test_manager.html'))
 })
 
 app.get('/doml', async (req, res) => {
@@ -155,14 +180,14 @@ io.on('connection', (socket) => {
         user = userID
 
         socket.on('webcam', (data) => {
-            console.log(data)
-            // TODO Save it to map here
+            imageCache.set(socket.client.id, data)
+            console.log(imageCache)
         })
     })
 
-    socket.on('requestFootage', (data) => {
+    socket.on('requestFootage', (camID) => {
         setInterval(() => {
-            socket.emit('footage', 'this is my data') // TODO Get data from map and send
+            socket.emit('footage', imageCache.get(camID))
         }, 500)
     })
 
