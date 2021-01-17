@@ -26,8 +26,8 @@ export default function CameraCapture({id}) {
       socket.emit('requestFootage', id)
       socket.on('footage', (data) => {
           setImg(data)
-      }, [])
-    })
+      })
+    }, [])
 
     return (
         <React.Fragment>

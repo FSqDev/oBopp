@@ -201,7 +201,7 @@ io.on('connection', (socket) => {
     socket.on('requestFootage', (camID) => {
         setInterval(() => {
             socket.emit('footage', imageCache.get(camID))
-        }, 500)
+        }, 100)
     })
 
     socket.on('disconnect', (reason) => {
