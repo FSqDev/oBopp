@@ -5,6 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,7 +13,7 @@ import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import ListItems from './ListItems';
+import { mainListItems } from './listItems';
 import Camera from "./Camera";
 import Dashboard from "./Dashboard";
 import {
@@ -151,15 +152,20 @@ export default function NavigationBar() {
           }}
           open={open}
         >
+          <div className={classes.toolbarIcon}>
+            <IconButton onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
           <Divider />
-          <ListItems />
+          <List>{mainListItems}</List>
           <Divider />
         </Drawer>
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Container className={classes.contents}>
           <Switch>
-            <Route path="/cameracapture">
+            <Route path="/ihatedarian">
               <Camera />
             </Route>
             <Route path="/">
