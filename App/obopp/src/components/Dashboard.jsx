@@ -13,6 +13,9 @@ import CameraCapture from './CameraCapture';
 import Title from './Title';
 import Cookies from 'js-cookie';
 import { getCameras } from '../actions/actions.js'
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';import Drawer from '@material-ui/core/Drawer';
 
 function Copyright() {
     return (
@@ -27,14 +30,42 @@ function Copyright() {
     );
   }
 
-const useStyles = makeStyles((theme) => ({
+    const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    },
+    image: {
+      width: 128,
+      height: 128,
+    },
+    img: {
+      margin: 'auto',
+      display: 'block',
+      maxWidth: '100%',
+      maxHeight: '100%',
+    },
+    container: {
+      paddingTop: theme.spacing(4),
+      paddingBottom: theme.spacing(4),
+    },
     paper: {
-        display: 'flex',
-        overflow: 'auto',
-        flexDirection: 'column',
-      },
-
-}));
+      padding: theme.spacing(10),
+      display: 'flex',
+      overflow: 'auto',
+      flexDirection: 'column',
+      margin: 'auto',
+    },
+    card: {
+      padding: theme.spacing.unit,
+      display: 'flex',
+      overflow: 'auto',
+      flexDirection: 'column',
+      margin: 'auto',
+    },
+    fixedHeight: {
+      height: 240,
+    },
+  }));
 
 export default function Dashboard() {
     const classes = useStyles;
@@ -47,40 +78,40 @@ export default function Dashboard() {
     }, [])
 
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+    const fixedHeightCard = clsx(classes.card, classes.fixedHeight);
     const fixedHeightCameraPaper = clsx(classes.paper, classes.fixedHeightCamera);
 
     return (
-        <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={1}>
+      <main className={classes.content}>
+        <Grid container spacing={16}>
+          <Grid item xs={12}>
             {cameras.map((socketID) => {
-              return (
-                <Grid item xs={12} md={4} lg={6}>
+              return(
+                <Grid>
                   <Title>Camera ID: {socketID}</Title>
-                  <Paper className={fixedHeightCameraPaper}>
-                    <CameraCapture id={socketID} key={socketID}/>
-                  </Paper>
+                  <Card className={classes.root} >
+                    <CardContent>
+                      <CameraCapture id={socketID} key={socketID}/>
+                    </CardContent>
+                  </Card>
                 </Grid>
               )
             })}
-            {/* Recent Events */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
+          </Grid>
+        {/* Recent Events */}
+        <Grid item xs={12}>
+          <Grid item xs container direction="column" spacing={16}>
+            <Card className={classes.root}>
+              <CardContent>
                 <Events />
-              </Paper>
-            </Grid>
-            {/* Chart */}
-            {/* <Grid item xs={12} md={4} lg={12}>
-              <Paper className={fixedHeightCameraPaper}>
-                <Chart />
-              </Paper>
-            </Grid> */}
+              </CardContent>
+            </Card>
           </Grid>
           <Box pt={4}>
             <Copyright />
           </Box>
-        </Container>
-      </main>
+        </Grid>
+      </Grid>
+    </main>
     );
 }
