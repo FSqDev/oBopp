@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import Webcam from "react-webcam";
 import Cookies from 'js-cookie';
-import { Grid } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
-import Container from '@material-ui/core/Container';
 import Title from './Title';
+import { makeStyles } from '@material-ui/core/styles';
+
 
 
 export default function Camera() {
@@ -25,6 +24,16 @@ export default function Camera() {
       [webcamRef]
     );
 
+    const useStyles = makeStyles((theme) => ({
+      paper: {
+          display: 'flex',
+          overflow: 'auto',
+          flexDirection: 'column',
+        },
+  
+  }));
+    
+
     const io = require("socket.io-client");
     useEffect(() => {
       console.log('useffect called')
@@ -35,25 +44,21 @@ export default function Camera() {
       }, 100);
       return () => clearInterval(interval);
     })
-   
+  
+    const classes = useStyles;
+
     return (
-        <Container maxWidth="lg">
-          <Grid container spacing={0}>
-            <Grid item xs={12}  md={4} lg={6}>
-              <Title>Camera Capture</Title>
-              <Paper>
-              <Webcam
-                  audio={false}
-                  height={1080/2}
-                  ref={webcamRef}
-                  screenshotFormat="image/jpeg"
-                  width={1920/2}
-                  videoConstraints={videoConstraints}
-                />
-              </Paper>
-            </Grid>
-          </Grid>
-        </Container>
+      <React.Fragment>
+        <Title>Camera Capture</Title>
+        <Webcam
+            audio={false}
+            height={1080/2}
+            ref={webcamRef}
+            screenshotFormat="image/jpeg"
+            width={1920/2}
+            videoConstraints={videoConstraints}
+          />
+      </React.Fragment>
     );
   };
 
