@@ -24,7 +24,7 @@ export default function Camera() {
     const io = require("socket.io-client");
     useEffect(() => {
       console.log('useffect called')
-      const socket = io("http://localhost:5000", { transports: ['websocket', 'polling', 'flashsocket'] })
+      const socket = io("https://obopp.herokuapp.com/", { transports: ['websocket', 'polling', 'flashsocket'] })
       socket.emit('connectUser', Cookies.get('user-id'))
       const interval = setInterval(() => {
         socket.emit('webcam', capture())
