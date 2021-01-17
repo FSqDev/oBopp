@@ -22,7 +22,11 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
-import Gallery from './Gallery';
+import CameraCapture1 from './CameraCapture1';
+import CameraCapture2 from './CameraCapture2';
+import CameraCapture3 from './CameraCapture3';
+import CameraCapture4 from './CameraCapture4';
+
 
 function Copyright() {
   return (
@@ -116,6 +120,9 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
+  fixedHeightCamera: {
+    height: 360,
+  },
 }));
 
 export default function Dashboard() {
@@ -128,6 +135,7 @@ export default function Dashboard() {
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const fixedHeightCameraPaper = clsx(classes.paper, classes.fixedHeightCamera);
 
   return (
     <div className={classes.root}>
@@ -174,58 +182,28 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            {/* Gallery */}
-            <Grid item xs={12} md={4} lg={4}>
-              <Paper className={fixedHeightPaper}>
-                <Gallery />
+            {/* CameraCapture1 */}
+            <Grid item xs={12} md={4} lg={6}>
+              <Paper className={fixedHeightCameraPaper}>
+                <CameraCapture1 />
               </Paper>
             </Grid>
-            {/* Gallery */}
-            <Grid item xs={12} md={4} lg={4}>
-              <Paper className={fixedHeightPaper}>
-                <Gallery />
+            {/* CameraCapture2 */}
+            <Grid item xs={12} md={4} lg={6}>
+              <Paper className={fixedHeightCameraPaper}>
+                <CameraCapture2 />
               </Paper>
             </Grid>
-            {/* Gallery */}
-            <Grid item xs={12} md={4} lg={4}>
-              <Paper className={fixedHeightPaper}>
-                <Gallery />
+            {/* CameraCapture3 */}
+            <Grid item xs={12} md={4} lg={6}>
+              <Paper className={fixedHeightCameraPaper}>
+                <CameraCapture3 />
               </Paper>
             </Grid>
-            {/* Gallery */}
-            <Grid item xs={12} md={4} lg={4}>
-              <Paper className={fixedHeightPaper}>
-                <Gallery />
-              </Paper>
-            </Grid>
-            {/* Gallery */}
-            <Grid item xs={12} md={4} lg={4}>
-              <Paper className={fixedHeightPaper}>
-                <Gallery />
-              </Paper>
-            </Grid>
-            {/* Gallery */}
-            <Grid item xs={12} md={4} lg={4}>
-              <Paper className={fixedHeightPaper}>
-                <Gallery />
-              </Paper>
-            </Grid>
-            {/* Gallery */}
-            <Grid item xs={12} md={4} lg={4}>
-              <Paper className={fixedHeightPaper}>
-                <Gallery />
-              </Paper>
-            </Grid>
-            {/* Gallery */}
-            <Grid item xs={12} md={4} lg={4}>
-              <Paper className={fixedHeightPaper}>
-                <Gallery />
-              </Paper>
-            </Grid>
-            {/* Gallery */}
-            <Grid item xs={12} md={4} lg={4}>
-              <Paper className={fixedHeightPaper}>
-                <Gallery />
+            {/* CameraCapture4 */}
+            <Grid item xs={12} md={4} lg={6}>
+              <Paper className={fixedHeightCameraPaper}>
+                <CameraCapture4 />
               </Paper>
             </Grid>
             {/* Chart */}
