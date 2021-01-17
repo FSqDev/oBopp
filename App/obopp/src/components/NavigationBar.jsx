@@ -135,7 +135,7 @@ export default function NavigationBar() {
             Dashboard
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
+            <Badge badgeContent={100} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
