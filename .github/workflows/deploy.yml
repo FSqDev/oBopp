@@ -1,4 +1,4 @@
-name: Heroku Deploy App
+name: Heroku Deploy All
 
 on:
   push:
@@ -6,7 +6,17 @@ on:
       - main
 
 jobs:
-  build:
+  build-server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.6.8
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "obopp"
+          heroku_email: "friendlysquidsoftware@gmail.com"
+          appdir: "Server"
+  build-app:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
