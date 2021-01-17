@@ -20,9 +20,10 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
-import Deposits from './Deposits';
-import Orders from './Orders';
+import Events from './Events';
 import CameraCapture from './CameraCapture';
+import Title from './Title';
+
 
 function Copyright() {
   return (
@@ -180,44 +181,42 @@ export default function Dashboard() {
           <Grid container spacing={3}>
             {/* CameraCapture1 */}
             <Grid item xs={12} md={4} lg={6}>
+              <Title>Camera Capture 1</Title>
               <Paper className={fixedHeightCameraPaper}>
-                <CameraCapture />
+                <CameraCapture/>
               </Paper>
             </Grid>
             {/* CameraCapture2 */}
             <Grid item xs={12} md={4} lg={6}>
+              <Title>Camera Capture 2</Title>
               <Paper className={fixedHeightCameraPaper}>
                 <CameraCapture />
               </Paper>
             </Grid>
             {/* CameraCapture3 */}
             <Grid item xs={12} md={4} lg={6}>
+              <Title>Camera Capture 3</Title>
               <Paper className={fixedHeightCameraPaper}>
                 <CameraCapture />
               </Paper>
             </Grid>
             {/* CameraCapture4 */}
             <Grid item xs={12} md={4} lg={6}>
+              <Title>Camera Capture 4</Title>
               <Paper className={fixedHeightCameraPaper}>
                 <CameraCapture />
               </Paper>
             </Grid>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <Chart />
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <Deposits />
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
+            {/* Recent Events */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Orders />
+                <Events />
+              </Paper>
+            </Grid>
+            {/* Chart */}
+            <Grid item xs={12} md={4} lg={12}>
+              <Paper className={fixedHeightCameraPaper}>
+                <Chart />
               </Paper>
             </Grid>
           </Grid>
