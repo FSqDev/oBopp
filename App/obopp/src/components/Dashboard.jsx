@@ -176,7 +176,7 @@ export default function Dashboard() {
           <Grid container spacing={4}>
             {/* Gallery */}
             <Grid item xs={12}>
-              <Paper className={fixedHeightPaper}>
+              <Paper>
                 <Gallery />
               </Paper>
             </Grid>
