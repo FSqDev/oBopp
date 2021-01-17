@@ -16,6 +16,7 @@ export default function Camera() {
     const capture = React.useCallback(
       () => {
         const imageSrc = webcamRef.current.getScreenshot();
+        console.log(imageSrc);
       },
       [webcamRef]
     );
