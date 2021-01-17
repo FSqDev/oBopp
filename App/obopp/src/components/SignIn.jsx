@@ -16,6 +16,7 @@ import Cookies from 'js-cookie';
 import Particles from 'react-particles-js';
 import './signin.css';
 import particlesConfig from './particles.json';
+import appLogo from '../image/logo.png'
 
 function Copyright() {
   return (
@@ -87,7 +88,7 @@ export default function SignIn() {
                 } />
       <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <img src='https://media.discordapp.net/attachments/799353146060570734/800326842535116820/pink-phone.png' alt="obopp logo" id="logo2"/>
+      <img src={appLogo} alt="obopp logo" id="logo2"/>
       <div className={classes.paper}  id="form">
         <Typography component="h1" variant="h5">
           Sign in
