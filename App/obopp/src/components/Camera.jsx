@@ -9,8 +9,8 @@ import { makeStyles } from '@material-ui/core/styles';
 export default function Camera() {
 
   const videoConstraints = {
-    width: 1920,
-    height: 1080,
+    width: 1280,
+    height: 720,
     facingMode: "environment"
   };
    
@@ -37,6 +37,7 @@ export default function Camera() {
     const io = require("socket.io-client");
     useEffect(() => {
       const socket = io("https://obopp.herokuapp.com/", { transports: ['websocket', 'polling', 'flashsocket'] })
+      // const socket = io("localhost:5000/", { transports: ['websocket', 'polling', 'flashsocket'] })
       socket.emit('connectUser', Cookies.get('user-id'))
       const interval = setInterval(() => {
         socket.emit('webcam', capture())
