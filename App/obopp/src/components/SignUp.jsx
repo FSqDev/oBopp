@@ -59,7 +59,7 @@ function Copyright() {
                       "detectsOn": "window",
                       "events": {
                         "onClick": {
-                          "enable": true,
+                          "enable": false,
                           "mode": "bubble"
                         },
                         "onDiv": {

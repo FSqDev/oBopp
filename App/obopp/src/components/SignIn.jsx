@@ -123,7 +123,7 @@ export default function SignIn() {
                       "detectsOn": "window",
                       "events": {
                         "onClick": {
-                          "enable": true,
+                          "enable": false,
                           "mode": "bubble"
                         },
                         "onDiv": {
