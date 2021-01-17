@@ -1,3 +1,4 @@
+<!-- This html file mimics the behavior of a CAMERA device -->
 <html>
     <body>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js"></script>
@@ -5,7 +6,7 @@
             const socket = io.connect("http://localhost:5000")
             socket.emit('connectUser', '600365766d5e9d0278b2e9a2')
             setInterval(() => {
-                socket.emit('webcam', 'this is my data')
+                socket.emit('webcam', new Date().getTime())
                 console.log('emitted')
             }, 500)
         </script>
