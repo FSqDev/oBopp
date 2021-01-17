@@ -13,7 +13,18 @@ import {
 } from "react-router-dom";
 import Cookies from 'js-cookie';
 
-function App() {return (
+function App() {
+  let id = function() {
+    if(Cookies.get('user-id')) {
+      console.log('cookie found')
+      return true
+    } else {
+      console.log('cookie not found')
+      return false
+    }
+  }
+
+  return (
     <Router>
       <div>
         <nav>
@@ -38,36 +49,35 @@ function App() {return (
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-        <Switch>
-          <Route path="/signin">
-            <SignIn />
-          </Route>
-          <Route path="/signup">
-            <SignUp />
-          </Route>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/ihatedarian">
-            <Camera />
-          </Route>
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
-        </Switch>
+        {id()
+          ? // If logged in
+            <Switch>
+              <Route exact path="/">
+                <Dashboard />
+              </Route>
+              <Route path="/ihatedarian">
+                <Camera />
+              </Route>
+              <Route path="/dashboard">
+                <Dashboard />
+              </Route>
+            </Switch>
+          : // Not logged in
+            <Switch>
+              <Route exact path="/">
+                <SignIn />
+              </Route>
+              <Route path="/signin">
+                <SignIn />
+              </Route>
+              <Route path="/signup">
+                <SignUp />
+              </Route>
+            </Switch>
+        }
       </div>
     </Router>
   );
-}
-
-function Home() {
-  let id = Cookies.get('socket-id');
-  if (!id) {
-    console.log('sign in pls');
-    return SignIn();
-  }
-  console.log('already signed in');
-  return <h2>Home</h2>;
 }
 
 function About() {
