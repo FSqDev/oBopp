@@ -31,7 +31,7 @@ export default function CameraCapture() {
                     id="contained-button-file"
                     multiple
                     type="file"
-                />
+                />  
             </div>
             <img src={lion_cat} alt="placeholder_image" height="300" width="480"/>
         </React.Fragment>
