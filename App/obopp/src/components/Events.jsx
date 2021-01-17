@@ -6,20 +6,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 
-// Generate Order Data
-function createData(id, date, time, camera, detection, actionsTaken) {
-  return { id, date, time, camera, detection, actionsTaken};
-}
+export default function Events({eventList}) {
+  console.log(eventList)
 
-const rows = [
-  createData(0, '16 Mar, 2019', '12:30', 'Camera Capture 1', 'Dog', 'None'),
-  createData(1, '16 Mar, 2019', '10:30', 'Camera Capture 2', 'Cat', 'None'),
-  createData(2, '16 Mar, 2019', '18:12', 'Camera Capture 3', '', 'ALERT'),
-  createData(3, '16 Mar, 2019', '17:45', 'Camera Capture 2', 'Person', 'ALERT'),
-  createData(4, '15 Mar, 2019', '12:22', 'Camera Capture 1', 'Dog','None'),
-];
-
-export default function Events() {
   return (
     <React.Fragment>
       <Title>Recent Events</Title>
@@ -29,18 +18,18 @@ export default function Events() {
             <TableCell>Date</TableCell>
             <TableCell>Time</TableCell>
             <TableCell>Camera</TableCell>
-            <TableCell>Detection</TableCell>
+            <TableCell>Detection(s)</TableCell>
             <TableCell align="right">Action Taken</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.time}</TableCell>
-              <TableCell>{row.camera}</TableCell>
-              <TableCell>{row.detection}</TableCell>
-              <TableCell align="right">{row.actionsTaken}</TableCell>
+          {eventList.map((event) => (
+            <TableRow key={event._id}>
+              <TableCell>{event.date}</TableCell>
+              <TableCell>{event.time}</TableCell>
+              <TableCell>{event.cameraId}</TableCell>
+              <TableCell>{event.detections}</TableCell>
+              <TableCell align="right">{event.actionTaken}</TableCell>
             </TableRow>
           ))}
         </TableBody>

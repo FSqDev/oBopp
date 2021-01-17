@@ -60,10 +60,10 @@ export default function Dashboard() {
       })
     }, [])
 
-    const [events, setEvents] = useState([]);
+    const [userEvents, setUserEvents] = useState([]);
     useEffect(() => {
       getUserEvents(Cookies.get('user-id')).then(function(result) {
-        setEvents(result.events);
+        setUserEvents(result.events);
       })
     }, [])
 
@@ -99,7 +99,7 @@ export default function Dashboard() {
           <Grid item xs={12}>
               <Card className={classes.root}>
                 <CardContent>
-                  <Events eventList={events}/>
+                  <Events eventList={userEvents}/>
                 </CardContent>
               </Card>
           </Grid>
