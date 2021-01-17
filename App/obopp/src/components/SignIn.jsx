@@ -69,8 +69,9 @@ export default function SignIn() {
         "password": password
       }).then((resp) => {
         console.log(resp.id);
-        Cookies.set('socket-id', resp.id)
-        history.replace("/dashboard")
+        Cookies.set('user-id', resp.id)
+        history.replace("/")
+        window.location.reload(false)
       })
     } catch (e) {
       console.log(e.message);

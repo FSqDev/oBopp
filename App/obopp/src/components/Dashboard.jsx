@@ -6,14 +6,11 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Chart from './Chart';
-import Deposits from './Deposits';
-import Orders from './Orders';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import CameraCapture1 from './CameraCapture1';
-import CameraCapture2 from './CameraCapture2';
-import CameraCapture3 from './CameraCapture3';
-import CameraCapture4 from './CameraCapture4';
+import Events from './Events';
+import CameraCapture from './CameraCapture';
+import Title from './Title';
 
 function Copyright() {
     return (
@@ -51,44 +48,42 @@ export default function Dashboard() {
           <Grid container spacing={3}>
             {/* CameraCapture1 */}
             <Grid item xs={12} md={4} lg={6}>
+              <Title>Camera Capture 1</Title>
               <Paper className={fixedHeightCameraPaper}>
-                <CameraCapture1 />
+                <CameraCapture/>
               </Paper>
             </Grid>
             {/* CameraCapture2 */}
             <Grid item xs={12} md={4} lg={6}>
+              <Title>Camera Capture 2</Title>
               <Paper className={fixedHeightCameraPaper}>
-                <CameraCapture2 />
+                <CameraCapture />
               </Paper>
             </Grid>
             {/* CameraCapture3 */}
             <Grid item xs={12} md={4} lg={6}>
+              <Title>Camera Capture 3</Title>
               <Paper className={fixedHeightCameraPaper}>
-                <CameraCapture3 />
+                <CameraCapture />
               </Paper>
             </Grid>
             {/* CameraCapture4 */}
             <Grid item xs={12} md={4} lg={6}>
+              <Title>Camera Capture 4</Title>
               <Paper className={fixedHeightCameraPaper}>
-                <CameraCapture4 />
+                <CameraCapture />
+              </Paper>
+            </Grid>
+            {/* Recent Events */}
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <Events />
               </Paper>
             </Grid>
             {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
+            <Grid item xs={12} md={4} lg={12}>
+              <Paper className={fixedHeightCameraPaper}>
                 <Chart />
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <Deposits />
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Orders />
               </Paper>
             </Grid>
           </Grid>
