@@ -82,72 +82,72 @@ export default function SignIn() {
 
   return (
     <>
-    <Particles id="particles"
-                params={
-                  particlesConfig
-                } />
+      <Particles id="particles"
+        params={
+          particlesConfig
+        } />
       <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <img src={appLogo} alt="obopp logo" id="logo2"/>
-      <Typography component="h1" variant="h3" align="center" id="title">
+        <CssBaseline />
+        <img src={appLogo} alt="obopp logo" id="logo2" />
+        <Typography component="h1" variant="h3" align="center" id="title">
           oBopp
       </Typography>
-      <div className={classes.paper}  id="form">
-        <Typography component="h1" variant="h5">
-          Sign in
+        <div className={classes.paper} id="form">
+          <Typography component="h1" variant="h5">
+            Sign in
         </Typography>
-        <form className={classes.form} noValidate onSubmit={login}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            disabled={!validateForm()}
-          >
-            Sign In
+          <form className={classes.form} noValidate onSubmit={login}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              disabled={!validateForm()}
+            >
+              Sign In
           </Button>
-          <Grid container justify="center">
-            <Grid item>
-              <Link href="SignUp" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
+            <Grid container justify="center">
+              <Grid item>
+                <Link href="SignUp" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </Container>
+          </form>
+        </div>
+        <Box mt={8}>
+          <Copyright />
+        </Box>
+      </Container>
     </>
   );
 }

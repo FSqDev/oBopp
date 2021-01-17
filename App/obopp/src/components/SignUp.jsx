@@ -18,18 +18,18 @@ import appLogo from '../image/logo.png'
 function Copyright() {
   return (
     <>
-    <Particles id="particles"
-                params={
-                  particlesConfig
-                } />
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://omfgdogs.com/">
-        oBopp
+      <Particles id="particles"
+        params={
+          particlesConfig
+        } />
+      <Typography variant="body2" color="textSecondary" align="center">
+        {'Copyright © '}
+        <Link color="inherit" href="https://omfgdogs.com/">
+          oBopp
       </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
+        {new Date().getFullYear()}
+        {'.'}
+      </Typography>
     </>
   );
 }
@@ -87,13 +87,13 @@ export default function SignUp() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <img src={appLogo} alt="obopp logo" id="logo"/>
+        <img src={appLogo} alt="obopp logo" id="logo" />
         <Typography component="h1" variant="h5" id="title2">
           Sign up
         </Typography>
         <form className={classes.form} noValidate onSubmit={register}>
           <Grid container spacing={2}>
-          <Grid item xs={12}>
+            <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required

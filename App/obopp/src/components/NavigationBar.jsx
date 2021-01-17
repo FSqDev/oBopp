@@ -24,6 +24,7 @@ import {
 } from "react-router-dom";
 import { Container } from '@material-ui/core';
 import Cookies from 'js-cookie';
+import appLogo from '../image/logo2.png';
 
 const drawerWidth = 240;
 
@@ -108,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
     height: 360,
   },
   contents: {
-    marginTop : 100,
+    marginTop: 100,
   }
 }));
 
@@ -144,13 +145,13 @@ export default function NavigationBar() {
             >
               <MenuIcon />
             </IconButton>
-            <img src="https://media.discordapp.net/attachments/799353146060570734/800295238110674954/smartphone4-512.png" alt="Kitten" height="35" width="35" />
+            <img src={appLogo} alt="Kitten" height="35" width="35" />
             <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
               Dashboard
           </Typography>
             <IconButton color="inherit">
               <Badge color="secondary">
-                <ExitToApp onClick={signOut}/>
+                <ExitToApp onClick={signOut} />
               </Badge>
             </IconButton>
           </Toolbar>
@@ -163,7 +164,7 @@ export default function NavigationBar() {
           open={open}
         >
           <div className={classes.toolbarIcon}>
-          <Typography align="left" variant="h5" id="obopp">
+            <Typography align="left" variant="h5" id="obopp">
               oBopp
             </Typography>
             <IconButton onClick={handleDrawerClose}>
