@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -15,7 +14,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button'
-import CardContent from '@material-ui/core/CardContent';import Drawer from '@material-ui/core/Drawer';
+import CardContent from '@material-ui/core/CardContent';
 import './dashboard.css';
 
 function Copyright() {
@@ -64,13 +63,12 @@ export default function Dashboard() {
     const [events, setEvents] = useState([]);
     useEffect(() => {
       getUserEvents(Cookies.get('user-id')).then(function(result) {
-        setEvents(events.events);
+        setEvents(result.events);
       })
     }, [])
 
-    const fixedHeightCard = clsx(classes.card, classes.fixedHeight);
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
+    // const fixedHeightCard = clsx(classes.card, classes.fixedHeight);
+    // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
     return (
       <main className={classes.root}>
@@ -101,7 +99,7 @@ export default function Dashboard() {
           <Grid item xs={12}>
               <Card className={classes.root}>
                 <CardContent>
-                  <Events />
+                  <Events eventList={events}/>
                 </CardContent>
               </Card>
           </Grid>

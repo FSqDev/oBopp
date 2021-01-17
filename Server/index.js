@@ -169,17 +169,18 @@ app.get('/contactInfo/:userid', (req, res) => {
     })
 })
 
-app.get('/camera', (req, res) => {
-    // Test endpoint which mimics the behavior of a camera
-    res.sendFile(path.join(__dirname + '/test_html/test_cam.html'))
-})
+// app.get('/camera', (req, res) => {
+//     // Test endpoint which mimics the behavior of a camera
+//     res.sendFile(path.join(__dirname + '/test_html/test_cam.html'))
+// })
 
-app.get('/manager', (req, res) => {
-    // Test endpoint which mimics the behavior of a management interface
-    res.sendFile(path.join(__dirname + '/test_html/test_manager.html'))
-})
+// app.get('/manager', (req, res) => {
+//     // Test endpoint which mimics the behavior of a management interface
+//     res.sendFile(path.join(__dirname + '/test_html/test_manager.html'))
+// })
 
 app.get('/events/:userid', (req, res) => {
+    // Get the events associated with a given user
     if (mongoose.connection.readyState != 1) {
         console.log('Issue with mongoose connection')
         res.status(500).send('Internal server error')
@@ -269,13 +270,6 @@ function rmCamFromUser(userID, socketID) {
         }
     })
 }
-
-
-// Deploy
-const port = process.env.PORT || 5000
-server.listen(port, () => {
-	console.log(`Listening on port ${port}...`)
-})
 
 
 /**
@@ -409,7 +403,6 @@ function perform_spicy_ml_shit(data) {
         .catch((err) => console.log('Email failed: ' + err));
  }
 
-
 app.get('/doml', async (req, res) => {
     perform_spicy_ml_shit()
     .then((data) => {
@@ -435,4 +428,11 @@ app.get('/doml', async (req, res) => {
     .catch((err) => {
         res.send('noml :(: ' + err);
     });
+})
+
+
+// Deploy
+const port = process.env.PORT || 5000
+server.listen(port, () => {
+	console.log(`Listening on port ${port}...`)
 })
