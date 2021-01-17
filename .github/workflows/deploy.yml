@@ -17,6 +17,7 @@ jobs:
           heroku_email: "friendlysquidsoftware@gmail.com"
           appdir: "Server"
   build-app:
+    needs: build-server
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
