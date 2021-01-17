@@ -42,7 +42,7 @@ export default function Camera() {
         socket.emit('webcam', capture())
       }, 100);
       return () => clearInterval(interval);
-    })
+    }, [])
   
     const classes = useStyles;
 
