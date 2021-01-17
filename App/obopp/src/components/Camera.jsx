@@ -1,6 +1,7 @@
 import { Button } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Webcam from "react-webcam";
+import Cookies from 'js-cookie';
 
 export default function Camera() {
 
@@ -15,11 +16,21 @@ export default function Camera() {
    
     const capture = React.useCallback(
       () => {
-        const imageSrc = webcamRef.current.getScreenshot();
-        console.log(imageSrc);
+        return webcamRef.current.getScreenshot();
       },
       [webcamRef]
     );
+
+    const io = require("socket.io-client");
+    useEffect(() => {
+      console.log('useffect called')
+      const socket = io("https://obopp.herokuapp.com/", { transports: ['websocket', 'polling', 'flashsocket'] })
+      socket.emit('connectUser', Cookies.get('user-id'))
+      const interval = setInterval(() => {
+        socket.emit('webcam', capture())
+      }, 100);
+      return () => clearInterval(interval);
+    })
    
     return (
       <>
@@ -31,11 +42,9 @@ export default function Camera() {
           width={1920}
           videoConstraints={videoConstraints}
         />
-        <Button onClick={capture}>Capture photo</Button>
       </>
     );
   };
 
   return (WebcamCapture());
-
 }
