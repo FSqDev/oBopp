@@ -32,16 +32,6 @@ export default function CameraCapture() {
                     multiple
                     type="file"
                 />
-                <label>
-                    <Button variant="contained" color="primary" component="span" position="absolute" bottom="0" left="0">
-                    Connect Camera
-                    </Button>
-                </label>
-                <label htmlFor="icon-button-file">
-                    <IconButton color="primary" component="span">
-                    <PhotoCamera />
-                    </IconButton>
-                </label>
             </div>
             <img src={lion_cat} alt="placeholder_image" height="300" width="480"/>
         </React.Fragment>

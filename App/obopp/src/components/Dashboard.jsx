@@ -27,7 +27,6 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-        padding: theme.spacing(2),
         display: 'flex',
         overflow: 'auto',
         flexDirection: 'column',
@@ -45,7 +44,7 @@ export default function Dashboard() {
         <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
+          <Grid container spacing={1}>
             {/* CameraCapture1 */}
             <Grid item xs={12} md={4} lg={6}>
               <Title>Camera Capture 1</Title>
