@@ -135,11 +135,12 @@ export default function NavigationBar() {
             >
               <MenuIcon />
             </IconButton>
+            <img src="https://media.discordapp.net/attachments/799353146060570734/800295238110674954/smartphone4-512.png" alt="Kitten" height="35" width="35" />
             <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
               Dashboard
           </Typography>
             <IconButton color="inherit">
-              <Badge badgeContent={100} color="secondary">
+              <Badge badgeContent={1} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
@@ -153,6 +154,9 @@ export default function NavigationBar() {
           open={open}
         >
           <div className={classes.toolbarIcon}>
+          <Typography align="left" variant="h5" id="obopp">
+              oBopp
+            </Typography>
             <IconButton onClick={handleDrawerClose}>
               <ChevronLeftIcon />
             </IconButton>
@@ -165,7 +169,7 @@ export default function NavigationBar() {
             renders the first one that matches the current URL. */}
         <Container className={classes.contents}>
           <Switch>
-            <Route path="/ihatedarian">
+            <Route path="/cameracapture">
               <Camera />
             </Route>
             <Route path="/">

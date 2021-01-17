@@ -3,7 +3,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import LinkedCameraIcon from '@material-ui/icons/LinkedCamera';
 import { Link } from 'react-router-dom'
 
 export const mainListItems = (
@@ -16,10 +16,10 @@ export const mainListItems = (
         <ListItemText primary="Dashboard" />
       </ListItem>
     </Link>
-    <Link to="/ihatedarian">
+    <Link to="/cameracapture">
       <ListItem button>
         <ListItemIcon>
-          <ShoppingCartIcon />
+          <LinkedCameraIcon />
         </ListItemIcon>
         <ListItemText primary="Camera" />
       </ListItem>

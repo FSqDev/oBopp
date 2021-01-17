@@ -5,9 +5,9 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         overflow: 'hidden',
-        padding: theme.spacing(0,3),
+        padding: theme.spacing(3,3),
         '& > *': {
-        margin: theme.spacing(1),
+        margin: theme.spacing(3),
       },
     },
     input: {
@@ -40,7 +40,7 @@ export default function CameraCapture({id}) {
                     type="file"
                 />  
             </div>
-            <img src={img} alt="placeholder_image" height="300" width="480"/>
+            <img src={img} alt="placeholder_image" height="350" width="580"/>
         </React.Fragment>
     );
 }

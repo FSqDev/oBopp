@@ -15,13 +15,18 @@ import Cookies from 'js-cookie';
 import { getCameras } from '../actions/actions.js'
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button'
 import CardContent from '@material-ui/core/CardContent';import Drawer from '@material-ui/core/Drawer';
+import lion_cat from '../image/lion_cat.jpg'
+import './dashboard.css';
 
 function Copyright() {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
-        <Link color="inherit" href="https://material-ui.com/">
+        <Link color="inherit" href="https://omfgdogs.com/">
           oBopp
         </Link>{' '}
         {new Date().getFullYear()}
@@ -32,34 +37,17 @@ function Copyright() {
 
     const useStyles = makeStyles((theme) => ({
     root: {
-      flexGrow: 1,
+      flex: 0
+
     },
-    image: {
-      width: 128,
-      height: 128,
-    },
-    img: {
-      margin: 'auto',
-      display: 'block',
-      maxWidth: '100%',
-      maxHeight: '100%',
-    },
+
     container: {
-      paddingTop: theme.spacing(4),
-      paddingBottom: theme.spacing(4),
-    },
-    paper: {
-      padding: theme.spacing(10),
-      display: 'flex',
-      overflow: 'auto',
-      flexDirection: 'column',
-      margin: 'auto',
+      paddingLeft: theme.spacing(4),
     },
     card: {
-      padding: theme.spacing.unit,
+      padding: theme.spacing(4),
       display: 'flex',
       overflow: 'auto',
-      flexDirection: 'column',
       margin: 'auto',
     },
     fixedHeight: {
@@ -77,41 +65,76 @@ export default function Dashboard() {
       })
     }, [])
 
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     const fixedHeightCard = clsx(classes.card, classes.fixedHeight);
-    const fixedHeightCameraPaper = clsx(classes.paper, classes.fixedHeightCamera);
+    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
 
     return (
-      <main className={classes.content}>
-        <Grid container spacing={16}>
-          <Grid item xs={12}>
-            {cameras.map((socketID) => {
+      <main className={classes.root}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm container >
+            {cameras.map((socketID, index) => {
               return(
-                <Grid>
-                  <Title>Camera ID: {socketID}</Title>
-                  <Card className={classes.root} >
-                    <CardContent>
-                      <CameraCapture id={socketID} key={socketID}/>
-                    </CardContent>
-                  </Card>
-                </Grid>
+                  <Grid item xs={6} lg={6} md={4}>
+                    <Card className={classes.root} >
+                      <CardContent>
+                        <h2>Camera {index+1}</h2>
+                        <CameraCapture id={socketID} key={socketID}/>
+                        < Typography 
+                        color='textSecondary' 
+                        variant='body2'
+                        align='center'>
+                          Camera ID: {socketID}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
               )
             })}
           </Grid>
-        {/* Recent Events */}
-        <Grid item xs={12}>
-          <Grid item xs container direction="column" spacing={16}>
-            <Card className={classes.root}>
-              <CardContent>
-                <Events />
-              </CardContent>
-            </Card>
-          </Grid>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
         </Grid>
-      </Grid>
-    </main>
+        {/* Recent Events */}
+        <Grid container spacing ={2} id="event">
+          <Grid item xs={12}>
+              <Card className={classes.root}>
+                <CardContent>
+                  <Events />
+                </CardContent>
+              </Card>
+          </Grid>
+        </Grid>
+
+        <Card className={classes.root} id="dog">
+          <CardActionArea>
+          <CardMedia
+              component="img"
+              alt="Contemplative Reptile"
+              height="540"
+              image="https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-1100x628.jpg"
+              title="Contemplative Reptile"
+              padding='10'
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              Dying?
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Call 911
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions>
+        <Button size="small" color="primary">
+          Share
+        </Button>
+        <Button size="small" color="primary">
+          Learn More
+        </Button>
+      </CardActions>
+      </Card>
+            <Box pt={4}>
+              <Copyright />
+            </Box>
+      </main>
     );
 }
