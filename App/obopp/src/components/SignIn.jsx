@@ -553,6 +553,9 @@ export default function SignIn() {
       <Container component="main" maxWidth="xs">
       <CssBaseline />
       <img src='https://media.discordapp.net/attachments/799353146060570734/800326842535116820/pink-phone.png' alt="obopp logo" id="logo2"/>
+      <Typography component="h1" variant="h3" align="center" id="title">
+          oBopp
+      </Typography>
       <div className={classes.paper}  id="form">
         <Typography component="h1" variant="h5">
           Sign in

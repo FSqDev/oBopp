@@ -552,7 +552,7 @@ export default function SignUp() {
       <CssBaseline />
       <div className={classes.paper}>
         <img src='https://media.discordapp.net/attachments/799353146060570734/800326842535116820/pink-phone.png' alt="obopp logo" id="logo"/>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" id="title2">
           Sign up
         </Typography>
         <form className={classes.form} noValidate onSubmit={register}>
