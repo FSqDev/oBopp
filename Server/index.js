@@ -201,6 +201,7 @@ io.on('connection', (socket) => {
                 if (counters[socket.client.id] >= 10) {
                     console.log('analyzing image');
                     check_frame(data, user);
+                    counters[socket.client.id] = 0;
                 } else {
                     counters[socket.client.id] += 1
                 }
