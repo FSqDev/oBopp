@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -39,18 +39,12 @@ const useStyles = makeStyles((theme) => ({
 export default function Dashboard() {
     const classes = useStyles;
 
-    const [cameras, setCameras] = [];
-    const loadCameras = async (e) => {
-        e.preventDefault()
-        try {
-          await getCameras(Cookies.get('user-id'))
-          .then((resp) => {
-            console.log(resp);
-          })
-        } catch (e) {
-          console.log(e.message);
-        }
-      }
+    const [cameras, setCameras] = useState([]);
+    useEffect(() => {
+      getCameras(Cookies.get('user-id')).then(function(result) {
+        setCameras(result.cams);
+      })
+    }, [])
 
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     const fixedHeightCameraPaper = clsx(classes.paper, classes.fixedHeightCamera);
@@ -60,34 +54,16 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={1}>
-            {/* CameraCapture1 */}
-            <Grid item xs={12} md={4} lg={6}>
-              <Title>Camera Capture 1</Title>
-              <Paper className={fixedHeightCameraPaper}>
-                <CameraCapture/>
-              </Paper>
-            </Grid>
-            {/* CameraCapture2 */}
-            <Grid item xs={12} md={4} lg={6}>
-              <Title>Camera Capture 2</Title>
-              <Paper className={fixedHeightCameraPaper}>
-                <CameraCapture />
-              </Paper>
-            </Grid>
-            {/* CameraCapture3 */}
-            <Grid item xs={12} md={4} lg={6}>
-              <Title>Camera Capture 3</Title>
-              <Paper className={fixedHeightCameraPaper}>
-                <CameraCapture />
-              </Paper>
-            </Grid>
-            {/* CameraCapture4 */}
-            <Grid item xs={12} md={4} lg={6}>
-              <Title>Camera Capture 4</Title>
-              <Paper className={fixedHeightCameraPaper}>
-                <CameraCapture />
-              </Paper>
-            </Grid>
+            {cameras.map((socketID) => {
+              return (
+                <Grid item xs={12} md={4} lg={6}>
+                  <Title>Camera ID: {socketID}</Title>
+                  <Paper className={fixedHeightCameraPaper}>
+                    <CameraCapture id={socketID} key={socketID}/>
+                  </Paper>
+                </Grid>
+              )
+            })}
             {/* Recent Events */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
@@ -95,11 +71,11 @@ export default function Dashboard() {
               </Paper>
             </Grid>
             {/* Chart */}
-            <Grid item xs={12} md={4} lg={12}>
+            {/* <Grid item xs={12} md={4} lg={12}>
               <Paper className={fixedHeightCameraPaper}>
                 <Chart />
               </Paper>
-            </Grid>
+            </Grid> */}
           </Grid>
           <Box pt={4}>
             <Copyright />
