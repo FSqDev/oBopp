@@ -70,7 +70,7 @@ export default function SignIn() {
       }).then((resp) => {
         console.log(resp.id);
         Cookies.set('user-id', resp.id)
-        history.replace("/dashboard")
+        history.replace("/")
         window.location.reload(false)
       })
     } catch (e) {
