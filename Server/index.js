@@ -178,37 +178,14 @@ app.get('/manager', (req, res) => {
     res.sendFile(path.join(__dirname + '/test_html/test_manager.html'))
 })
 
-app.get('/doml', async (req, res) => {
-    perform_spicy_ml_shit()
-    .then((data) => {
-        let predictions = data.predictions;
-        for (i = 0; i < predictions.length; ++i) {
-            // console.log(predictions[i]);
-            if (predictions[i].class === 'person') {
-                response = {
-                    'person_detected': true,
-                    'img': data.img
-                }
-                send_intruder_photo(data.img, '+14038772383');
-                // send_intruder_email(data.img, 'grenierb96@gmail.com');
-                res.send(response);
-                return;
-                // res.send(JSON.stringify(predictions));
-            }
-        }
-        res.send({
-            'person_detected': false
-        });
-    })
-    .catch((err) => {
-        res.send('noml :(: ' + err);
-    });
-})
-
 
 /**
  * SOCKET BEHAVIOR
  */
+let counters = new Map();
+let FIVE_MINUTES = 5*60*1000;
+let alert_last_triggered = new Date() - (FIVE_MINUTES * 2);
+let wait = false;
 io.on('connection', (socket) => {
     console.log("New connection from: " + socket.client.id)
     var user
@@ -216,9 +193,19 @@ io.on('connection', (socket) => {
     socket.on('connectUser', (userID) => {
         addCamToUser(userID, socket.client.id)
         user = userID
+        counters[socket.client.id] = 0
 
         socket.on('webcam', (data) => {
             imageCache.set(socket.client.id, data)
+            if (new Date() - alert_last_triggered > FIVE_MINUTES && data && !wait) {
+                if (counters[socket.client.id] >= 10) {
+                    console.log('analyzing image');
+                    check_frame(data, user);
+                    counters[socket.client.id] = 0;
+                } else {
+                    counters[socket.client.id] += 1
+                }
+            }
         })
     })
 
@@ -276,30 +263,71 @@ server.listen(port, () => {
  * HOME OF SPICY ML SHIT
  */
 
-function perform_spicy_ml_shit() {
-    return new Promise(function(resolve, reject) {
-        fs.readFile('testimages/test.jpg', async function(err, data) {
-            if (err) {
-                console.log('Made an oops loading photo :(');
-                reject('Failed to read image');
-            }
-            if (data) {
-                inkjet.decode(data, async (err, decoded) => {
-                    if (err) reject('failed to decode image');
+function getUserInfo(userId) {
+    return new Promise((resolve, reject) => {
+        // Get contact info of a user (phone, email)
+        if (mongoose.connection.readyState != 1) {
+            console.log('Issue with mongoose connection')
+            reject('failed to connect to mongoose');
+        }
+        User.findById(userId).then((user) => {
+            resolve({
+                'email': user.email,
+                'phone': user.phone
+            })
+        })
+    });
+}
 
+async function check_frame(data, userId) {
+    wait = true;
+    getUserInfo(userId)
+        .then((info) => {
+            perform_spicy_ml_shit(data)
+            .then((d) => {
+                let predictions = d.predictions;
+                for (i = 0; i < predictions.length; ++i) {
+                    // console.log(predictions[i]);
+                    if (predictions[i].class === 'person') {
+                        response = {
+                            'person_detected': true,
+                            'img': d.img
+                        }
+                        // send_intruder_photo(d.img, info.phone);
+                        send_intruder_email(d.img, info.email);
+                        alert_last_triggered = new Date();
+                        wait = false;
+                        return;
+                    }
+                }
+                wait = false;
+            })
+            .catch((err) => {
+                console.log('noml :(: ' + err);
+            });
+    });
+}
+
+function perform_spicy_ml_shit(data) {
+    return new Promise(function(resolve, reject) {
+        if (data) {
+            let shit = data.split(',')[1];
+            inkjet.decode(Buffer.from(shit, 'base64'), async (err, decoded) => {
+                if (err){
+                    reject('failed to decode image: ' + err);
+                } else {
                     model_promise.then(async (model) => {
                         const predictions = await model.detect(decoded);
-                        // console.log('Predictions: ');
-                        // console.log(predictions);   
+                        console.log('Predictions: ');
+                        console.log(predictions);   
                         resolve({
                             'predictions': predictions,
-                            'img': data.toString('base64'),
+                            'img': shit,
                         });
                     })
-                    
-                });
-            }
-        });
+                }
+            });
+        }
     });
  }
 
@@ -317,6 +345,7 @@ function perform_spicy_ml_shit() {
 
  async function send_intruder_photo(image, user_phone) {
     if (image) {
+        console.log('PHONE: ' + user_phone);
         uploadImage(image).then(() => {
             twilio_client.messages
             .create({
@@ -350,3 +379,33 @@ function perform_spicy_ml_shit() {
         .then(() => console.log('Email sent'))
         .catch((err) => console.log('Email failed: ' + err));
  }
+
+
+
+
+app.get('/doml', async (req, res) => {
+    perform_spicy_ml_shit()
+    .then((data) => {
+        let predictions = data.predictions;
+        for (i = 0; i < predictions.length; ++i) {
+            // console.log(predictions[i]);
+            if (predictions[i].class === 'person') {
+                response = {
+                    'person_detected': true,
+                    'img': data.img
+                }
+                send_intruder_photo(data.img, '+14038772383');
+                // send_intruder_email(data.img, 'grenierb96@gmail.com');
+                res.send(response);
+                return;
+                // res.send(JSON.stringify(predictions));
+            }
+        }
+        res.send({
+            'person_detected': false
+        });
+    })
+    .catch((err) => {
+        res.send('noml :(: ' + err);
+    });
+})
