@@ -13,9 +13,10 @@ import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems } from './listItems';
+import ListItems from './ListItems';
 import Camera from "./Camera";
 import Dashboard from "./Dashboard";
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -158,14 +159,14 @@ export default function NavigationBar() {
             </IconButton>
           </div>
           <Divider />
-          <List>{mainListItems}</List>
+          <ListItems/>
           <Divider />
         </Drawer>
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Container className={classes.contents}>
           <Switch>
-            <Route path="/ihatedarian">
+            <Route path="/cameracapture">
               <Camera />
             </Route>
             <Route path="/">
