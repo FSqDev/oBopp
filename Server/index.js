@@ -13,6 +13,7 @@ const io = require('socket.io')(server)
 const { ObjectID } = require('mongodb')
 const { mongoose } = require('./mongoose');
 const { User } = require('./models/user')
+const { Event } = require('./models/events')
 const bcrypt = require('bcrypt');
 const SALT = 10;
 // spicy ML shit
@@ -178,6 +179,24 @@ app.get('/manager', (req, res) => {
     res.sendFile(path.join(__dirname + '/test_html/test_manager.html'))
 })
 
+app.get('/events/:userid', (req, res) => {
+    if (mongoose.connection.readyState != 1) {
+        console.log('Issue with mongoose connection')
+        res.status(500).send('Internal server error')
+		return
+    }
+    console.log(req.params.userid);
+    Event.find({'userId': req.params.userid}, function (err, events) {
+        if (err) {
+            res.status(500).send('Internal Server error');
+            return;
+        }
+        res.send({
+            'events': events
+        });
+    })
+})
+
 
 /**
  * SOCKET BEHAVIOR
@@ -200,7 +219,7 @@ io.on('connection', (socket) => {
             if (new Date() - alert_last_triggered > FIVE_MINUTES && data && !wait) {
                 if (counters[socket.client.id] >= 10) {
                     console.log('analyzing image');
-                    check_frame(data, user);
+                    check_frame(data, user, socket.client.id);
                     counters[socket.client.id] = 0;
                 } else {
                     counters[socket.client.id] += 1
@@ -279,26 +298,37 @@ function getUserInfo(userId) {
     });
 }
 
-async function check_frame(data, userId) {
+async function check_frame(data, userId, cameraId) {
     wait = true;
     getUserInfo(userId)
         .then((info) => {
             perform_spicy_ml_shit(data)
             .then((d) => {
                 let predictions = d.predictions;
-                for (i = 0; i < predictions.length; ++i) {
-                    // console.log(predictions[i]);
-                    if (predictions[i].class === 'person') {
-                        response = {
-                            'person_detected': true,
-                            'img': d.img
+                if (predictions.length > 0) {
+                    let now = new Date();
+                    let newEvent = new Event({
+                        date: now.toDateString(),
+                        time: now.toTimeString().slice(0, 9),
+                        actionTaken: 'None',
+                        cameraId: cameraId,
+                        userId: userId
+                    });
+                    for (i = 0; i < predictions.length; ++i) {
+                        newEvent.detections.push(predictions[i].class);
+                        // console.log(predictions[i]);
+                        if (predictions[i].class === 'person') {
+                            response = {
+                                'person_detected': true,
+                                'img': d.img
+                            }
+                            newEvent.actionTaken = 'Alert';
+                            // send_intruder_photo(d.img, info.phone);
+                            send_intruder_email(d.img, info.email);
+                            alert_last_triggered = new Date();
                         }
-                        // send_intruder_photo(d.img, info.phone);
-                        send_intruder_email(d.img, info.email);
-                        alert_last_triggered = new Date();
-                        wait = false;
-                        return;
                     }
+                    newEvent.save();
                 }
                 wait = false;
             })
@@ -345,7 +375,6 @@ function perform_spicy_ml_shit(data) {
 
  async function send_intruder_photo(image, user_phone) {
     if (image) {
-        console.log('PHONE: ' + user_phone);
         uploadImage(image).then(() => {
             twilio_client.messages
             .create({
@@ -379,8 +408,6 @@ function perform_spicy_ml_shit(data) {
         .then(() => console.log('Email sent'))
         .catch((err) => console.log('Email failed: ' + err));
  }
-
-
 
 
 app.get('/doml', async (req, res) => {
