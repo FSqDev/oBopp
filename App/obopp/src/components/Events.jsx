@@ -7,8 +7,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 
 export default function Events({eventList}) {
-  console.log(eventList)
-
   return (
     <React.Fragment>
       <Title>Recent Events</Title>

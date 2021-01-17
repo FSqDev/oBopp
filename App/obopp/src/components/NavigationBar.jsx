@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from "react-router-dom"
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,7 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import ExitToApp from '@material-ui/icons/ExitToApp';
 import { mainListItems } from './listItems';
 import Camera from "./Camera";
 import Dashboard from "./Dashboard";
@@ -22,6 +23,7 @@ import {
   Route,
 } from "react-router-dom";
 import { Container } from '@material-ui/core';
+import Cookies from 'js-cookie';
 
 const drawerWidth = 240;
 
@@ -120,6 +122,13 @@ export default function NavigationBar() {
     setOpen(false);
   };
 
+  const history = useHistory()
+  const signOut = () => {
+    Cookies.remove('user-id')
+    history.replace("/")
+    window.location.reload(false)
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -140,8 +149,8 @@ export default function NavigationBar() {
               Dashboard
           </Typography>
             <IconButton color="inherit">
-              <Badge badgeContent={1} color="secondary">
-                <NotificationsIcon />
+              <Badge color="secondary">
+                <ExitToApp onClick={signOut}/>
               </Badge>
             </IconButton>
           </Toolbar>
