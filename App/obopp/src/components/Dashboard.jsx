@@ -57,7 +57,7 @@ export default function Dashboard() {
             {cameras.map((socketID) => {
               return (
                 <Grid item xs={12} md={4} lg={6}>
-                  <Title>Camera Capture 1</Title>
+                  <Title>Camera ID: {socketID}</Title>
                   <Paper className={fixedHeightCameraPaper}>
                     <CameraCapture id={socketID} key={socketID}/>
                   </Paper>
